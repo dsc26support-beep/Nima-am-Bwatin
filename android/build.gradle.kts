@@ -39,6 +39,7 @@ subprojects {
 
     pluginManager.withPlugin("com.android.application") {
         extensions.configure<com.android.build.gradle.BaseExtension> {
+            compileSdkVersion(36)
             compileOptions {
                 sourceCompatibility = JavaVersion.VERSION_17
                 targetCompatibility = JavaVersion.VERSION_17
@@ -47,6 +48,12 @@ subprojects {
     }
     pluginManager.withPlugin("com.android.library") {
         extensions.configure<com.android.build.gradle.BaseExtension> {
+            // Plugin modules (e.g. file_picker) reference the Flutter tool's
+            // shared compileSdkVersion (34 for this Flutter release)
+            // internally rather than :app's own compileSdk, so bumping only
+            // :app doesn't help -- flutter_plugin_android_lifecycle (a
+            // transitive dep of file_picker) requires compileSdk >= 36.
+            compileSdkVersion(36)
             compileOptions {
                 sourceCompatibility = JavaVersion.VERSION_17
                 targetCompatibility = JavaVersion.VERSION_17
