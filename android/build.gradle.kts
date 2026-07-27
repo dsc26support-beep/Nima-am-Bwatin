@@ -30,6 +30,13 @@ subprojects {
 // evaluationDependsOn above, and calling afterEvaluate on a project that has
 // already finished evaluating throws.
 subprojects {
+    // :app already configures itself consistently (Java 17 / Kotlin 17) in
+    // its own build.gradle.kts, and -- being evaluated early via
+    // evaluationDependsOn above -- has already had compileOptions finalized
+    // by AGP by the time this block runs. Only the plugin subprojects (whose
+    // bundled Gradle config is what's actually mismatched) need overriding.
+    if (name == "app") return@subprojects
+
     pluginManager.withPlugin("com.android.application") {
         extensions.configure<com.android.build.gradle.BaseExtension> {
             compileOptions {
