@@ -4,8 +4,11 @@ import 'package:package_info_plus/package_info_plus.dart';
 
 import '../../l10n/app_localizations.dart';
 import '../../widgets/language_toggle.dart';
+import '../../widgets/update_check_tile.dart';
 import '../export_import/export_screen.dart';
 import '../export_import/import_screen.dart';
+import 'feedback_screen.dart';
+import 'manage_medications_screen.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
@@ -24,6 +27,15 @@ class SettingsScreen extends ConsumerWidget {
             const SizedBox(height: 24),
             Card(
               child: ListTile(
+                leading: const Icon(Icons.medication_outlined),
+                title: Text(ref.t('settings_manage_medications')),
+                onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => const ManageMedicationsScreen()),
+                ),
+              ),
+            ),
+            Card(
+              child: ListTile(
                 leading: const Icon(Icons.upload_file_outlined),
                 title: Text(ref.t('settings_export_data')),
                 onTap: () => Navigator.of(context).push(
@@ -40,7 +52,17 @@ class SettingsScreen extends ConsumerWidget {
                 ),
               ),
             ),
+            Card(
+              child: ListTile(
+                leading: const Icon(Icons.feedback_outlined),
+                title: Text(ref.t('settings_feedback')),
+                onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => const FeedbackScreen()),
+                ),
+              ),
+            ),
             const SizedBox(height: 24),
+            const UpdateCheckTile(),
             Card(
               child: ListTile(
                 leading: const Icon(Icons.info_outline),

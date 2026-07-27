@@ -5,7 +5,6 @@ import '../../core/theme.dart';
 import '../../l10n/app_localizations.dart';
 import '../../models/medication.dart';
 import '../../providers/medication_provider.dart';
-import '../../widgets/confirm_dialog.dart';
 import '../../widgets/empty_state.dart';
 import 'medication_form_screen.dart';
 
@@ -20,18 +19,6 @@ class MedicationListScreen extends ConsumerWidget {
       return '$hour:$minute $period';
     }).join(', ');
     return times;
-  }
-
-  Future<void> _delete(BuildContext context, WidgetRef ref, Medication medication) async {
-    final confirmed = await showConfirmDialog(
-      context,
-      message: ref.tImperative('medication_delete_confirm'),
-      confirmLabel: ref.tImperative('common_delete'),
-      cancelLabel: ref.tImperative('common_cancel'),
-    );
-    if (confirmed) {
-      await ref.read(medicationProvider.notifier).delete(medication);
-    }
   }
 
   @override
@@ -57,10 +44,6 @@ class MedicationListScreen extends ConsumerWidget {
                         MaterialPageRoute(
                           builder: (_) => MedicationFormScreen(existing: medication),
                         ),
-                      ),
-                      trailing: IconButton(
-                        icon: const Icon(Icons.delete_outline),
-                        onPressed: () => _delete(context, ref, medication),
                       ),
                     ),
                   );

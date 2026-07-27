@@ -396,8 +396,68 @@ Export my data
 Import data from a backup
 >
 
+**settings_manage_medications**
+Manage medications
+>
+
 **settings_about**
 About this app
+>
+
+**settings_check_updates**
+Check for updates
+>
+
+**settings_checking_updates**
+Checking for updates...
+>
+
+**settings_update_now**
+Update now
+>
+
+**settings_up_to_date**
+You're on the latest version
+>
+
+**settings_feedback**
+Send feedback
+>
+
+---
+
+## Manage medications screen
+
+**manage_medications_title**
+Manage medications
+>
+
+**manage_medications_empty**
+No medications to manage yet.
+>
+
+---
+
+## Feedback screen
+
+**feedback_title**
+Send feedback
+>
+
+**feedback_intro**
+Help us improve this app. Tell us what's working well or what could be better.
+>
+
+**feedback_hint**
+Type your comments here...
+>
+
+**feedback_submit**
+Submit
+>
+
+**feedback_empty_error**
+Please write something before submitting.
 >
 
 ---

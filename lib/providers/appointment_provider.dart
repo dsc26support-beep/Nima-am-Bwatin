@@ -22,20 +22,35 @@ class AppointmentNotifier extends StateNotifier<List<Appointment>> {
 
   Future<void> add(Appointment appointment) async {
     final saved = await _repository.add(appointment);
-    final id = await _schedulingService.scheduleAppointment(saved, _translator);
+    int? id;
+    try {
+      id = await _schedulingService.scheduleAppointment(saved, _translator);
+    } catch (_) {
+      // A notification-scheduling failure (e.g. missing exact-alarm
+      // permission) must not prevent the saved appointment from showing up.
+    }
     await _repository.update(saved.copyWith(notificationId: id));
     await _load();
   }
 
   Future<void> update(Appointment appointment) async {
     await _repository.update(appointment);
-    final id = await _schedulingService.scheduleAppointment(appointment, _translator);
+    int? id;
+    try {
+      id = await _schedulingService.scheduleAppointment(appointment, _translator);
+    } catch (_) {
+      // See add().
+    }
     await _repository.update(appointment.copyWith(notificationId: id));
     await _load();
   }
 
   Future<void> delete(Appointment appointment) async {
-    await _schedulingService.cancelAppointment(appointment);
+    try {
+      await _schedulingService.cancelAppointment(appointment);
+    } catch (_) {
+      // Ignore -- still proceed with deleting the appointment itself.
+    }
     if (appointment.id != null) {
       await _repository.delete(appointment.id!);
     }

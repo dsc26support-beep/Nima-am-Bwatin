@@ -22,20 +22,38 @@ class MedicationNotifier extends StateNotifier<List<Medication>> {
 
   Future<void> add(Medication medication) async {
     final saved = await _repository.add(medication);
-    final ids = await _schedulingService.scheduleMedication(saved, _translator);
+    var ids = <int>[];
+    try {
+      ids = await _schedulingService.scheduleMedication(saved, _translator);
+    } catch (_) {
+      // Notification scheduling can fail independently of saving the
+      // medication itself (e.g. the exact-alarm permission hasn't been
+      // granted on this device yet) -- that must never block the saved
+      // medication from showing up.
+    }
     await _repository.update(saved.copyWith(notificationIds: ids));
     await _load();
   }
 
   Future<void> update(Medication medication) async {
     await _repository.update(medication);
-    final ids = await _schedulingService.scheduleMedication(medication, _translator);
+    var ids = <int>[];
+    try {
+      ids = await _schedulingService.scheduleMedication(medication, _translator);
+    } catch (_) {
+      // See add() -- a scheduling failure must not prevent the state
+      // refresh below from picking up the change that was just saved.
+    }
     await _repository.update(medication.copyWith(notificationIds: ids));
     await _load();
   }
 
   Future<void> delete(Medication medication) async {
-    await _schedulingService.cancelMedication(medication);
+    try {
+      await _schedulingService.cancelMedication(medication);
+    } catch (_) {
+      // Ignore -- still proceed with deleting the medication itself.
+    }
     if (medication.id != null) {
       await _repository.delete(medication.id!);
     }
