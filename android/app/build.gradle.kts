@@ -6,7 +6,9 @@ plugins {
 
 android {
     namespace = "com.nimaambwatin.nima_am_bwatin"
-    compileSdk = flutter.compileSdkVersion
+    // flutter.compileSdkVersion (34) is too low for file_picker's transitive
+    // dependency on flutter_plugin_android_lifecycle, which requires >=36.
+    compileSdk = 36
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
