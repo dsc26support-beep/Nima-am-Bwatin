@@ -48,6 +48,14 @@ dev_dependencies:
   flutter_lints: ^6.0.0
   flutter_launcher_icons: ^0.14.3
 
+# path_provider_android >=2.3.0 rewrote its Android implementation on top of
+# the `jni` package, whose Android build.gradle (jni 1.0.1) fails to evaluate
+# on this project's Gradle/AGP setup ("Could not find method kotlin() ...").
+# Pinning to the last pre-jni release avoids that broken build entirely; it
+# still satisfies path_provider_platform_interface's ^2.1.0 constraint.
+dependency_overrides:
+  path_provider_android: 2.2.17
+
 flutter:
   uses-material-design: true
 
