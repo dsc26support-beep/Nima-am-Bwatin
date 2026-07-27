@@ -10,6 +10,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
 
@@ -35,9 +37,28 @@ jobs:
       - name: Build debug APK
         run: flutter build apk --debug
 
-      - name: Upload debug APK
+      - name: Upload debug APK (build artifact)
         uses: actions/upload-artifact@v4
         with:
           name: nima-am-bwatin-debug-apk
           path: build/app/outputs/flutter-apk/app-debug.apk
           retention-days: 30
+
+      # Workflow artifacts always come back as a .zip, which Android's
+      # browser/downloader can't do anything with directly. Publish the raw
+      # .apk as a rolling pre-release too, so there's always a direct download
+      # link that installs on a phone with no unzipping step.
+      - name: Publish APK as a direct-download release
+        if: github.event_name == 'push'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: debug-latest
+          name: Latest debug build
+          body: >
+            Automatically rebuilt from commit ${{ github.sha }}.
+            Download app-debug.apk below and install it directly on your
+            Android phone (no unzipping needed).
+          prerelease: true
+          files: build/app/outputs/flutter-apk/app-debug.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
