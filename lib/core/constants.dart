@@ -2,7 +2,7 @@ class AppConstants {
   AppConstants._();
 
   static const String appName = 'Nima-am-Bwatin';
-  static const int maxMedications = 10;
+  static const int maxMedications = 20;
 
   static const String prefsKeyLanguage = 'app_language';
   static const String prefsKeyOnboardingComplete = 'onboarding_complete';

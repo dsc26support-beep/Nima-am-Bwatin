@@ -6,7 +6,9 @@ import '../../l10n/app_localizations.dart';
 import '../../models/blood_sugar_reading.dart';
 import '../../providers/blood_sugar_provider.dart';
 import '../../widgets/band_badge.dart';
+import '../../widgets/confirm_dialog.dart';
 import '../../widgets/empty_state.dart';
+import 'blood_sugar_advice_screen.dart';
 import 'blood_sugar_entry_screen.dart';
 
 class BloodSugarHistoryScreen extends ConsumerWidget {
@@ -29,6 +31,18 @@ class BloodSugarHistoryScreen extends ConsumerWidget {
     return reading.type.name == 'fbs' ? ref.t('reading_type_fbs') : ref.t('reading_type_rbs');
   }
 
+  Future<void> _delete(BuildContext context, WidgetRef ref, BloodSugarReading reading) async {
+    final confirmed = await showConfirmDialog(
+      context,
+      message: ref.tImperative('blood_sugar_delete_confirm'),
+      confirmLabel: ref.tImperative('common_delete'),
+      cancelLabel: ref.tImperative('common_cancel'),
+    );
+    if (confirmed && reading.id != null) {
+      await ref.read(bloodSugarProvider.notifier).delete(reading.id!);
+    }
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final readings = ref.watch(bloodSugarProvider);
@@ -48,7 +62,19 @@ class BloodSugarHistoryScreen extends ConsumerWidget {
                       leading: const Icon(Icons.bloodtype, color: AppColors.coral),
                       title: Text('${_typeLabel(ref, reading)}: ${reading.value} ${_unitLabel(ref, reading)}'),
                       subtitle: Text(_formatTimestamp(reading.timestamp)),
-                      trailing: BandBadge(band: reading.band),
+                      onTap: () => Navigator.of(context).push(
+                        MaterialPageRoute(builder: (_) => BloodSugarAdviceScreen(reading: reading)),
+                      ),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          BandBadge(band: reading.band),
+                          IconButton(
+                            icon: const Icon(Icons.delete_outline),
+                            onPressed: () => _delete(context, ref, reading),
+                          ),
+                        ],
+                      ),
                     ),
                   );
                 },

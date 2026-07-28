@@ -5,7 +5,7 @@ and clinic appointments, and blood sugar readings.
 
 ## Features
 
-- **Medications** — track up to 10 medications with dosage and a flexible
+- **Medications** — track up to 20 medications with dosage and a flexible
   reminder schedule (times per day, specific times, every X hours, or
   specific weekdays). Reminders fire as local notifications, even after the
   phone restarts.

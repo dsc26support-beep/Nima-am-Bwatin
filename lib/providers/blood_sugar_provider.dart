@@ -16,13 +16,15 @@ class BloodSugarNotifier extends StateNotifier<List<BloodSugarReading>> {
   }
 
   Future<void> add(BloodSugarReading reading) async {
-    await _repository.add(reading);
-    await _load();
+    final saved = await _repository.add(reading);
+    // getAll() orders by timestamp DESC, so a just-added reading (the most
+    // recent) belongs at the front -- no need for a full reload to see it.
+    state = [saved, ...state];
   }
 
   Future<void> delete(int id) async {
+    state = state.where((r) => r.id != id).toList();
     await _repository.delete(id);
-    await _load();
   }
 }
 

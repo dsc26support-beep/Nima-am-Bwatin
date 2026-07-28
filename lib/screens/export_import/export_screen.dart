@@ -42,6 +42,14 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
             children: [
               const Icon(Icons.upload_file_outlined, size: 64),
               const SizedBox(height: 24),
+              Text(ref.t('export_intro'), textAlign: TextAlign.center),
+              const SizedBox(height: 12),
+              Text(
+                ref.t('export_recovery_note'),
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+              const SizedBox(height: 24),
               if (_message != null) ...[
                 Text(_message!, textAlign: TextAlign.center),
                 const SizedBox(height: 24),

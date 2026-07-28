@@ -22,6 +22,10 @@ class AppointmentNotifier extends StateNotifier<List<Appointment>> {
 
   Future<void> add(Appointment appointment) async {
     final saved = await _repository.add(appointment);
+    // Show the new appointment right away rather than waiting on
+    // notification scheduling (slower, and can fail independently).
+    state = [...state, saved];
+
     int? id;
     try {
       id = await _schedulingService.scheduleAppointment(saved, _translator);
@@ -29,23 +33,29 @@ class AppointmentNotifier extends StateNotifier<List<Appointment>> {
       // A notification-scheduling failure (e.g. missing exact-alarm
       // permission) must not prevent the saved appointment from showing up.
     }
-    await _repository.update(saved.copyWith(notificationId: id));
-    await _load();
+    final withId = saved.copyWith(notificationId: id);
+    await _repository.update(withId);
+    state = [for (final a in state) if (a.id == saved.id) withId else a];
   }
 
   Future<void> update(Appointment appointment) async {
     await _repository.update(appointment);
+    state = [for (final a in state) if (a.id == appointment.id) appointment else a];
+
     int? id;
     try {
       id = await _schedulingService.scheduleAppointment(appointment, _translator);
     } catch (_) {
       // See add().
     }
-    await _repository.update(appointment.copyWith(notificationId: id));
-    await _load();
+    final withId = appointment.copyWith(notificationId: id);
+    await _repository.update(withId);
+    state = [for (final a in state) if (a.id == appointment.id) withId else a];
   }
 
   Future<void> delete(Appointment appointment) async {
+    state = state.where((a) => a.id != appointment.id).toList();
+
     try {
       await _schedulingService.cancelAppointment(appointment);
     } catch (_) {
@@ -54,7 +64,6 @@ class AppointmentNotifier extends StateNotifier<List<Appointment>> {
     if (appointment.id != null) {
       await _repository.delete(appointment.id!);
     }
-    await _load();
   }
 }
 

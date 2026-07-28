@@ -177,7 +177,7 @@ Medication limit reached
 >
 
 **medication_cap_reached_body**
-You can track up to 10 medications at a time. Remove one before adding another.
+You can track up to 20 medications at a time. Remove one before adding another.
 >
 
 **medication_delete_confirm**
@@ -348,6 +348,10 @@ mg/dL
 Save reading
 >
 
+**blood_sugar_delete_confirm**
+Delete this blood sugar reading?
+>
+
 **band_normal**
 Normal
 >
@@ -400,6 +404,10 @@ Import data from a backup
 Manage medications
 >
 
+**settings_manage_appointments**
+Manage appointments
+>
+
 **settings_about**
 About this app
 >
@@ -434,6 +442,18 @@ Manage medications
 
 **manage_medications_empty**
 No medications to manage yet.
+>
+
+---
+
+## Manage appointments screen
+
+**manage_appointments_title**
+Manage appointments
+>
+
+**manage_appointments_empty**
+No appointments to manage yet.
 >
 
 ---
@@ -506,6 +526,14 @@ This app needs permission to send you reminder notifications for medications and
 
 **export_title**
 Export data
+>
+
+**export_intro**
+Your medications, appointments, and blood sugar history are stored only on this phone. If you lose this phone, switch to a new one, or reinstall the app, this data cannot be recovered unless you've exported a backup like this.
+>
+
+**export_recovery_note**
+To recover it later, keep the exported file somewhere safe (email, Drive, computer). Then on the new phone, open Settings > "Import data from a backup" and select that file.
 >
 
 **export_success**

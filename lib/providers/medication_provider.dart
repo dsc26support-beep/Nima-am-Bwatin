@@ -22,6 +22,11 @@ class MedicationNotifier extends StateNotifier<List<Medication>> {
 
   Future<void> add(Medication medication) async {
     final saved = await _repository.add(medication);
+    // Update state immediately so the new medication shows up instantly,
+    // rather than waiting on notification scheduling (a separate, slower,
+    // and sometimes-failing step) before the list reflects what was saved.
+    state = [...state, saved];
+
     var ids = <int>[];
     try {
       ids = await _schedulingService.scheduleMedication(saved, _translator);
@@ -31,24 +36,29 @@ class MedicationNotifier extends StateNotifier<List<Medication>> {
       // granted on this device yet) -- that must never block the saved
       // medication from showing up.
     }
-    await _repository.update(saved.copyWith(notificationIds: ids));
-    await _load();
+    final withIds = saved.copyWith(notificationIds: ids);
+    await _repository.update(withIds);
+    state = [for (final m in state) if (m.id == saved.id) withIds else m];
   }
 
   Future<void> update(Medication medication) async {
     await _repository.update(medication);
+    state = [for (final m in state) if (m.id == medication.id) medication else m];
+
     var ids = <int>[];
     try {
       ids = await _schedulingService.scheduleMedication(medication, _translator);
     } catch (_) {
-      // See add() -- a scheduling failure must not prevent the state
-      // refresh below from picking up the change that was just saved.
+      // See add().
     }
-    await _repository.update(medication.copyWith(notificationIds: ids));
-    await _load();
+    final withIds = medication.copyWith(notificationIds: ids);
+    await _repository.update(withIds);
+    state = [for (final m in state) if (m.id == medication.id) withIds else m];
   }
 
   Future<void> delete(Medication medication) async {
+    state = state.where((m) => m.id != medication.id).toList();
+
     try {
       await _schedulingService.cancelMedication(medication);
     } catch (_) {
@@ -57,7 +67,6 @@ class MedicationNotifier extends StateNotifier<List<Medication>> {
     if (medication.id != null) {
       await _repository.delete(medication.id!);
     }
-    await _load();
   }
 
   Future<void> toggleActive(Medication medication) async {

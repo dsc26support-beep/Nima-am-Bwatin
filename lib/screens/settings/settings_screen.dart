@@ -8,6 +8,7 @@ import '../../widgets/update_check_tile.dart';
 import '../export_import/export_screen.dart';
 import '../export_import/import_screen.dart';
 import 'feedback_screen.dart';
+import 'manage_appointments_screen.dart';
 import 'manage_medications_screen.dart';
 
 class SettingsScreen extends ConsumerWidget {
@@ -31,6 +32,15 @@ class SettingsScreen extends ConsumerWidget {
                 title: Text(ref.t('settings_manage_medications')),
                 onTap: () => Navigator.of(context).push(
                   MaterialPageRoute(builder: (_) => const ManageMedicationsScreen()),
+                ),
+              ),
+            ),
+            Card(
+              child: ListTile(
+                leading: const Icon(Icons.event_note_outlined),
+                title: Text(ref.t('settings_manage_appointments')),
+                onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => const ManageAppointmentsScreen()),
                 ),
               ),
             ),
