@@ -116,11 +116,22 @@
   "feedback_hint": "Type your comments here...",
   "feedback_submit": "Submit",
   "feedback_empty_error": "Please write something before submitting.",
+  "feedback_sent_title": "Feedback sent",
+  "feedback_sent_body": "Your feedback email was sent. Thank you!",
+  "feedback_failed_title": "Could not send",
+  "feedback_failed_body": "We couldn't open your email app to send this feedback.",
+  "feedback_try_again": "Try again",
+  "feedback_back_to_settings": "Back to Settings",
 
   "medication_notification_title": "Time for your medication",
   "medication_notification_body": "Take {dosage} of {name} now.",
+  "pills_taken_action": "Pills taken",
   "appointment_notification_title": "Upcoming appointment",
   "appointment_notification_body": "{title} at {location}",
+
+  "settings_medication_log": "Pill-taking history",
+  "medication_log_title": "Pill-taking history",
+  "medication_log_empty": "Nothing logged yet -- this fills in each time you press \"Pills taken\" on a reminder.",
 
   "permission_exact_alarm_title": "Allow exact reminders",
   "permission_exact_alarm_body": "So medication and appointment reminders go off at the right time, please allow this app to schedule exact alarms on the next screen.",

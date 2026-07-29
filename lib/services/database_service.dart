@@ -7,6 +7,8 @@ class DatabaseService {
 
   Database? _db;
 
+  static const int _dbVersion = 2;
+
   Future<Database> get database async {
     _db ??= await _initDb();
     return _db!;
@@ -17,7 +19,7 @@ class DatabaseService {
     final path = join(dbPath, 'nima_am_bwatin.db');
     return openDatabase(
       path,
-      version: 1,
+      version: _dbVersion,
       onCreate: (db, version) async {
         await db.execute('''
           CREATE TABLE medications (
@@ -52,7 +54,23 @@ class DatabaseService {
             timestamp TEXT NOT NULL
           )
         ''');
+        await _createMedicationLogTable(db);
+      },
+      onUpgrade: (db, oldVersion, newVersion) async {
+        if (oldVersion < 2) {
+          await _createMedicationLogTable(db);
+        }
       },
     );
+  }
+
+  Future<void> _createMedicationLogTable(DatabaseExecutor db) async {
+    await db.execute('''
+      CREATE TABLE medication_log (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        medication_name TEXT NOT NULL,
+        taken_at TEXT NOT NULL
+      )
+    ''');
   }
 }

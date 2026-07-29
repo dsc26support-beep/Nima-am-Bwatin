@@ -10,6 +10,7 @@ import '../export_import/import_screen.dart';
 import 'feedback_screen.dart';
 import 'manage_appointments_screen.dart';
 import 'manage_medications_screen.dart';
+import 'medication_log_screen.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
@@ -41,6 +42,15 @@ class SettingsScreen extends ConsumerWidget {
                 title: Text(ref.t('settings_manage_appointments')),
                 onTap: () => Navigator.of(context).push(
                   MaterialPageRoute(builder: (_) => const ManageAppointmentsScreen()),
+                ),
+              ),
+            ),
+            Card(
+              child: ListTile(
+                leading: const Icon(Icons.checklist_outlined),
+                title: Text(ref.t('settings_medication_log')),
+                onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => const MedicationLogScreen()),
                 ),
               ),
             ),

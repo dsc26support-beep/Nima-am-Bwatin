@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart' show TimeOfDay;
 
 import '../models/appointment.dart';
@@ -92,15 +94,32 @@ class SchedulingService {
       'name': medication.name,
       'dosage': medication.dosage,
     });
+    final pillsTakenLabel = translator.t('pills_taken_action');
+    final payload = jsonEncode({'medicationName': medication.name});
 
     for (var i = 0; i < occurrences.length && i < _medicationSlotCapacity; i++) {
       final occurrence = occurrences[i];
       final id = baseId + i;
       ids.add(id);
       if (occurrence.weekday == null) {
-        await _notificationService.scheduleDaily(id, title, body, occurrence.time);
+        await _notificationService.scheduleDaily(
+          id,
+          title,
+          body,
+          occurrence.time,
+          pillsTakenLabel: pillsTakenLabel,
+          payload: payload,
+        );
       } else {
-        await _notificationService.scheduleWeekly(id, title, body, occurrence.time, occurrence.weekday!);
+        await _notificationService.scheduleWeekly(
+          id,
+          title,
+          body,
+          occurrence.time,
+          occurrence.weekday!,
+          pillsTakenLabel: pillsTakenLabel,
+          payload: payload,
+        );
       }
     }
 

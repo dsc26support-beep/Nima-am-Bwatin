@@ -35,7 +35,60 @@ class _FeedbackScreenState extends ConsumerState<FeedbackScreen> {
       query: 'subject=${Uri.encodeComponent('Nima-am-Bwatin Feedback')}'
           '&body=${Uri.encodeComponent(text)}',
     );
-    await launchUrl(uri);
+
+    bool sent;
+    try {
+      sent = await launchUrl(uri);
+    } catch (_) {
+      sent = false;
+    }
+
+    if (!mounted) return;
+    sent ? _showSentDialog() : _showFailedDialog();
+  }
+
+  void _showSentDialog() {
+    showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (dialogContext) => AlertDialog(
+        title: Text(ref.tImperative('feedback_sent_title')),
+        content: Text(ref.tImperative('feedback_sent_body')),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(dialogContext).pop(); // close dialog
+              Navigator.of(context).pop(); // back to Settings
+            },
+            child: Text(ref.tImperative('common_ok')),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showFailedDialog() {
+    showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (dialogContext) => AlertDialog(
+        title: Text(ref.tImperative('feedback_failed_title')),
+        content: Text(ref.tImperative('feedback_failed_body')),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(), // stay on feedback form
+            child: Text(ref.tImperative('feedback_try_again')),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(dialogContext).pop(); // close dialog
+              Navigator.of(context).pop(); // back to Settings
+            },
+            child: Text(ref.tImperative('feedback_back_to_settings')),
+          ),
+        ],
+      ),
+    );
   }
 
   @override

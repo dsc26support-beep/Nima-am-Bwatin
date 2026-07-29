@@ -480,6 +480,30 @@ Submit
 Please write something before submitting.
 >
 
+**feedback_sent_title**
+Feedback sent
+>
+
+**feedback_sent_body**
+Your feedback email was sent. Thank you!
+>
+
+**feedback_failed_title**
+Could not send
+>
+
+**feedback_failed_body**
+We couldn't open your email app to send this feedback.
+>
+
+**feedback_try_again**
+Try again
+>
+
+**feedback_back_to_settings**
+Back to Settings
+>
+
 ---
 
 ## Notification text
@@ -492,12 +516,32 @@ Time for your medication
 Take {dosage} of {name} now.
 >
 
+**pills_taken_action**
+Pills taken
+>
+
 **appointment_notification_title**
 Upcoming appointment
 >
 
 **appointment_notification_body**
 {title} at {location}
+>
+
+---
+
+## Pill-taking history screen (Settings)
+
+**settings_medication_log**
+Pill-taking history
+>
+
+**medication_log_title**
+Pill-taking history
+>
+
+**medication_log_empty**
+Nothing logged yet -- this fills in each time you press "Pills taken" on a reminder.
 >
 
 ---
