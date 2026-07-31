@@ -1,13 +1,22 @@
+import 'package:meta/meta.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DatabaseService {
-  DatabaseService._();
+  DatabaseService._({this.dbName = 'nima_am_bwatin.db'});
   static final DatabaseService instance = DatabaseService._();
 
+  /// Gives tests their own isolated database file. Without this, separate
+  /// test files sharing the same physical sqlite file (via
+  /// sqflite_common_ffi) can hit disk I/O errors from concurrent access
+  /// when `flutter test` runs files in parallel.
+  @visibleForTesting
+  DatabaseService.forTesting(String dbName) : this._(dbName: dbName);
+
+  final String dbName;
   Database? _db;
 
-  static const int _dbVersion = 2;
+  static const int _dbVersion = 3;
 
   Future<Database> get database async {
     _db ??= await _initDb();
@@ -16,7 +25,7 @@ class DatabaseService {
 
   Future<Database> _initDb() async {
     final dbPath = await getDatabasesPath();
-    final path = join(dbPath, 'nima_am_bwatin.db');
+    final path = join(dbPath, dbName);
     return openDatabase(
       path,
       version: _dbVersion,
@@ -55,10 +64,14 @@ class DatabaseService {
           )
         ''');
         await _createMedicationLogTable(db);
+        await _createCaregiversTable(db);
       },
       onUpgrade: (db, oldVersion, newVersion) async {
         if (oldVersion < 2) {
           await _createMedicationLogTable(db);
+        }
+        if (oldVersion < 3) {
+          await _createCaregiversTable(db);
         }
       },
     );
@@ -70,6 +83,18 @@ class DatabaseService {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         medication_name TEXT NOT NULL,
         taken_at TEXT NOT NULL
+      )
+    ''');
+  }
+
+  Future<void> _createCaregiversTable(DatabaseExecutor db) async {
+    await db.execute('''
+      CREATE TABLE caregivers (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        email TEXT,
+        whatsapp_number TEXT,
+        messenger_username TEXT
       )
     ''');
   }

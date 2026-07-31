@@ -7,6 +7,7 @@ import 'core/theme.dart';
 import 'providers/locale_provider.dart';
 import 'screens/home/home_screen.dart';
 import 'screens/onboarding/onboarding_screen.dart';
+import 'services/notification_service.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -14,6 +15,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorKey: NotificationService.navigatorKey,
       title: AppConstants.appName,
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light(),
@@ -26,16 +28,31 @@ class App extends StatelessWidget {
   }
 }
 
-class _StartupGate extends ConsumerWidget {
+class _StartupGate extends ConsumerStatefulWidget {
   const _StartupGate();
+
+  @override
+  ConsumerState<_StartupGate> createState() => _StartupGateState();
+}
+
+class _StartupGateState extends ConsumerState<_StartupGate> {
+  bool _checkedLaunchNotification = false;
 
   Future<bool> _isOnboardingComplete() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getBool(AppConstants.prefsKeyOnboardingComplete) ?? false;
   }
 
+  void _checkLaunchNotificationOnce() {
+    if (_checkedLaunchNotification) return;
+    _checkedLaunchNotification = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      NotificationService.instance.handleLaunchFromNotification();
+    });
+  }
+
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final stringsAsync = ref.watch(assetStringsProvider);
 
     return stringsAsync.when(
@@ -43,7 +60,11 @@ class _StartupGate extends ConsumerWidget {
         future: _isOnboardingComplete(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) return const _SplashScreen();
-          return snapshot.data! ? const HomeScreen() : const OnboardingScreen();
+          if (snapshot.data!) {
+            _checkLaunchNotificationOnce();
+            return const HomeScreen();
+          }
+          return const OnboardingScreen();
         },
       ),
       loading: () => const _SplashScreen(),

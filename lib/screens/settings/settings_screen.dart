@@ -7,8 +7,10 @@ import '../../widgets/language_toggle.dart';
 import '../../widgets/update_check_tile.dart';
 import '../export_import/export_screen.dart';
 import '../export_import/import_screen.dart';
+import 'alert_caregiver_screen.dart';
 import 'feedback_screen.dart';
 import 'manage_appointments_screen.dart';
+import 'manage_caregivers_screen.dart';
 import 'manage_medications_screen.dart';
 import 'medication_log_screen.dart';
 
@@ -51,6 +53,24 @@ class SettingsScreen extends ConsumerWidget {
                 title: Text(ref.t('settings_medication_log')),
                 onTap: () => Navigator.of(context).push(
                   MaterialPageRoute(builder: (_) => const MedicationLogScreen()),
+                ),
+              ),
+            ),
+            Card(
+              child: ListTile(
+                leading: const Icon(Icons.people_outline),
+                title: Text(ref.t('settings_manage_caregivers')),
+                onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => const ManageCaregiversScreen()),
+                ),
+              ),
+            ),
+            Card(
+              child: ListTile(
+                leading: const Icon(Icons.campaign_outlined),
+                title: Text(ref.t('settings_ask_reminder')),
+                onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => const AlertCaregiverScreen()),
                 ),
               ),
             ),

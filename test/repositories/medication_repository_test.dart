@@ -8,19 +8,20 @@ import 'package:nima_am_bwatin/models/medication_schedule.dart';
 import 'package:nima_am_bwatin/repositories/medication_repository.dart';
 import 'package:nima_am_bwatin/services/database_service.dart';
 
+const _dbName = 'test_medication_repository.db';
+
 void main() {
   setUpAll(() async {
     sqfliteFfiInit();
     databaseFactory = databaseFactoryFfi;
-    // The ffi factory persists to a real file on disk (unlike a real device's
-    // sandboxed storage), so start from a clean slate regardless of what any
-    // earlier test run left behind.
-    final path = join(await databaseFactory.getDatabasesPath(), 'nima_am_bwatin.db');
+    // Each test file gets its own db file name -- sharing one across files
+    // causes disk I/O errors when flutter test runs files concurrently.
+    final path = join(await databaseFactory.getDatabasesPath(), _dbName);
     await databaseFactory.deleteDatabase(path);
   });
 
   test('editing a specific-times schedule and saving persists the new time', () async {
-    final repository = MedicationRepository(DatabaseService.instance);
+    final repository = MedicationRepository(DatabaseService.forTesting(_dbName));
 
     final original = await repository.add(const Medication(
       name: 'Paracetamol',

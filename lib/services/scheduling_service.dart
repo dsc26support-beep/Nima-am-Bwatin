@@ -95,6 +95,7 @@ class SchedulingService {
       'dosage': medication.dosage,
     });
     final pillsTakenLabel = translator.t('pills_taken_action');
+    final alertCaregiverLabel = translator.t('alert_caregiver_action');
     final payload = jsonEncode({'medicationName': medication.name});
 
     for (var i = 0; i < occurrences.length && i < _medicationSlotCapacity; i++) {
@@ -108,6 +109,7 @@ class SchedulingService {
           body,
           occurrence.time,
           pillsTakenLabel: pillsTakenLabel,
+          alertCaregiverLabel: alertCaregiverLabel,
           payload: payload,
         );
       } else {
@@ -118,6 +120,7 @@ class SchedulingService {
           occurrence.time,
           occurrence.weekday!,
           pillsTakenLabel: pillsTakenLabel,
+          alertCaregiverLabel: alertCaregiverLabel,
           payload: payload,
         );
       }

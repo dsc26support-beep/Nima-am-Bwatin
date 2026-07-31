@@ -6,16 +6,20 @@ import 'package:nima_am_bwatin/models/medication_log_entry.dart';
 import 'package:nima_am_bwatin/repositories/medication_log_repository.dart';
 import 'package:nima_am_bwatin/services/database_service.dart';
 
+const _dbName = 'test_medication_log_repository.db';
+
 void main() {
   setUpAll(() async {
     sqfliteFfiInit();
     databaseFactory = databaseFactoryFfi;
-    final path = join(await databaseFactory.getDatabasesPath(), 'nima_am_bwatin.db');
+    // Each test file gets its own db file name -- sharing one across files
+    // causes disk I/O errors when flutter test runs files concurrently.
+    final path = join(await databaseFactory.getDatabasesPath(), _dbName);
     await databaseFactory.deleteDatabase(path);
   });
 
   test('logging a taken pill persists and reads back newest first', () async {
-    final repository = MedicationLogRepository(DatabaseService.instance);
+    final repository = MedicationLogRepository(DatabaseService.forTesting(_dbName));
 
     await repository.add(MedicationLogEntry(
       medicationName: 'Paracetamol',

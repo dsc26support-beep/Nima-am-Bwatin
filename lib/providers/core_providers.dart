@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../repositories/appointment_repository.dart';
 import '../repositories/blood_sugar_repository.dart';
+import '../repositories/caregiver_repository.dart';
 import '../repositories/medication_log_repository.dart';
 import '../repositories/medication_repository.dart';
 import '../services/database_service.dart';
@@ -33,6 +34,10 @@ final bloodSugarRepositoryProvider = Provider<BloodSugarRepository>((ref) {
 
 final medicationLogRepositoryProvider = Provider<MedicationLogRepository>((ref) {
   return MedicationLogRepository(ref.watch(databaseServiceProvider));
+});
+
+final caregiverRepositoryProvider = Provider<CaregiverRepository>((ref) {
+  return CaregiverRepository(ref.watch(databaseServiceProvider));
 });
 
 final dietaryAdviceServiceProvider = FutureProvider<DietaryAdviceService>((ref) async {

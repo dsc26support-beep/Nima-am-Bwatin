@@ -12,14 +12,15 @@ import 'package:nima_am_bwatin/services/localization_service.dart';
 import 'package:nima_am_bwatin/services/notification_service.dart';
 import 'package:nima_am_bwatin/services/scheduling_service.dart';
 
+const _dbName = 'test_medication_notifier.db';
+
 void main() {
   setUpAll(() async {
     sqfliteFfiInit();
     databaseFactory = databaseFactoryFfi;
-    // The ffi factory persists to a real file on disk (unlike a real device's
-    // sandboxed storage), so start from a clean slate regardless of what any
-    // earlier test run left behind.
-    final path = join(await databaseFactory.getDatabasesPath(), 'nima_am_bwatin.db');
+    // Each test file gets its own db file name -- sharing one across files
+    // causes disk I/O errors when flutter test runs files concurrently.
+    final path = join(await databaseFactory.getDatabasesPath(), _dbName);
     await databaseFactory.deleteDatabase(path);
   });
 
@@ -31,7 +32,7 @@ void main() {
       // for a real device where e.g. the exact-alarm permission hasn't been
       // granted, which previously left the in-memory list stale after a save.
       final notifier = MedicationNotifier(
-        MedicationRepository(DatabaseService.instance),
+        MedicationRepository(DatabaseService.forTesting(_dbName)),
         SchedulingService(NotificationService.instance),
         const AppTranslator({}, 'en'),
       );

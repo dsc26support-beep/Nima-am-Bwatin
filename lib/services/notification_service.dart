@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:flutter/material.dart' show TimeOfDay;
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -10,9 +10,11 @@ import 'package:timezone/timezone.dart' as tz;
 
 import '../models/medication_log_entry.dart';
 import '../repositories/medication_log_repository.dart';
+import '../screens/settings/alert_caregiver_screen.dart';
 import 'database_service.dart';
 
 const String pillsTakenActionId = 'pills_taken';
+const String alertCaregiverActionId = 'alert_caregiver';
 
 /// Handles the "Pills taken" action when the user taps it while the app is
 /// not in the foreground. flutter_local_notifications runs this in a
@@ -44,6 +46,11 @@ class NotificationService {
   NotificationService._();
   static final NotificationService instance = NotificationService._();
 
+  /// Wired into MaterialApp so a tap on the "Alert caregiver" notification
+  /// action can navigate there even though NotificationService itself has
+  /// no BuildContext of its own.
+  static final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
   final FlutterLocalNotificationsPlugin plugin = FlutterLocalNotificationsPlugin();
   bool _initialized = false;
 
@@ -73,7 +80,11 @@ class NotificationService {
     await plugin.initialize(
       initSettings,
       onDidReceiveNotificationResponse: (response) {
-        _handlePillsTaken(response);
+        if (response.actionId == alertCaregiverActionId) {
+          _navigateToAlertCaregiver(response.payload);
+        } else {
+          _handlePillsTaken(response);
+        }
       },
       onDidReceiveBackgroundNotificationResponse: notificationTapBackground,
     );
@@ -96,6 +107,35 @@ class NotificationService {
     );
 
     _initialized = true;
+  }
+
+  /// Handles the case where the app was fully closed and got launched by
+  /// tapping "Alert caregiver" (rather than the callback above firing into
+  /// an already-running app). Call once, after the first frame, from the
+  /// startup screen.
+  Future<void> handleLaunchFromNotification() async {
+    final details = await plugin.getNotificationAppLaunchDetails();
+    final response = details?.notificationResponse;
+    if (details?.didNotificationLaunchApp == true &&
+        response != null &&
+        response.actionId == alertCaregiverActionId) {
+      _navigateToAlertCaregiver(response.payload);
+    }
+  }
+
+  static void _navigateToAlertCaregiver(String? payload) {
+    String? medicationName;
+    if (payload != null) {
+      try {
+        final data = jsonDecode(payload) as Map<String, dynamic>;
+        medicationName = data['medicationName'] as String?;
+      } catch (_) {
+        // Ignore -- fall back to the generic (no medication name) message.
+      }
+    }
+    navigatorKey.currentState?.push(
+      MaterialPageRoute(builder: (_) => AlertCaregiverScreen(medicationName: medicationName)),
+    );
   }
 
   Future<void> requestPermissions() async {
@@ -121,7 +161,10 @@ class NotificationService {
   /// Medication reminders are ongoing/insistent "alarms": they can't be
   /// swiped away, they repeat their sound/vibration until acted on, and the
   /// only way to stop one is the "Pills taken" action (which cancels it).
-  NotificationDetails _medicationDetails(String pillsTakenLabel) {
+  /// "Alert caregiver" is a second, non-cancelling action that opens the
+  /// app to a screen for messaging a saved caregiver -- the alarm keeps
+  /// ringing since the medication still hasn't been taken.
+  NotificationDetails _medicationDetails(String pillsTakenLabel, String alertCaregiverLabel) {
     return NotificationDetails(
       android: AndroidNotificationDetails(
         medicationChannelId,
@@ -137,6 +180,12 @@ class NotificationService {
         additionalFlags: _insistentFlag,
         actions: [
           AndroidNotificationAction(pillsTakenActionId, pillsTakenLabel, cancelNotification: true),
+          AndroidNotificationAction(
+            alertCaregiverActionId,
+            alertCaregiverLabel,
+            showsUserInterface: true,
+            cancelNotification: false,
+          ),
         ],
       ),
     );
@@ -176,6 +225,7 @@ class NotificationService {
     String body,
     TimeOfDay time, {
     required String pillsTakenLabel,
+    required String alertCaregiverLabel,
     required String payload,
   }) async {
     await plugin.zonedSchedule(
@@ -183,7 +233,7 @@ class NotificationService {
       title,
       body,
       _nextInstanceOfTime(time),
-      _medicationDetails(pillsTakenLabel),
+      _medicationDetails(pillsTakenLabel, alertCaregiverLabel),
       androidScheduleMode: await _scheduleMode(),
       uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
       matchDateTimeComponents: DateTimeComponents.time,
@@ -198,6 +248,7 @@ class NotificationService {
     TimeOfDay time,
     int weekday, {
     required String pillsTakenLabel,
+    required String alertCaregiverLabel,
     required String payload,
   }) async {
     await plugin.zonedSchedule(
@@ -205,7 +256,7 @@ class NotificationService {
       title,
       body,
       _nextInstanceOfTimeAndWeekday(time, weekday),
-      _medicationDetails(pillsTakenLabel),
+      _medicationDetails(pillsTakenLabel, alertCaregiverLabel),
       androidScheduleMode: await _scheduleMode(),
       uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
       matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
