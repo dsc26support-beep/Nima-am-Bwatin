@@ -1,0 +1,26 @@
+{
+  "fbs_normal": {
+    "en": "Your fasting blood sugar is in the normal range. Keep eating a balanced diet with plenty of vegetables, fruit, and whole grains, and stay active most days.",
+    "gil": "Your fasting blood sugar is in the normal range. Keep eating a balanced diet with plenty of vegetables, fruit, and whole grains, and stay active most days."
+  },
+  "fbs_prediabetes": {
+    "en": "Your fasting blood sugar is a little higher than normal. Cut back on sugary drinks and white rice/bread, eat more vegetables and fish, and try to walk regularly. Talk to a nurse or doctor about this reading.",
+    "gil": "Your fasting blood sugar is a little higher than normal. Cut back on sugary drinks and white rice/bread, eat more vegetables and fish, and try to walk regularly. Talk to a nurse or doctor about this reading."
+  },
+  "fbs_diabetes": {
+    "en": "Your fasting blood sugar is in the diabetes range. Please see a doctor or nurse soon. In the meantime, avoid sugary drinks and snacks, favor vegetables, fish, and small portions of rice, and stay active.",
+    "gil": "Your fasting blood sugar is in the diabetes range. Please see a doctor or nurse soon. In the meantime, avoid sugary drinks and snacks, favor vegetables, fish, and small portions of rice, and stay active."
+  },
+  "rbs_normal": {
+    "en": "Your random blood sugar is in the normal range. Keep eating a balanced diet with plenty of vegetables, fruit, and whole grains, and stay active most days.",
+    "gil": "Your random blood sugar is in the normal range. Keep eating a balanced diet with plenty of vegetables, fruit, and whole grains, and stay active most days."
+  },
+  "rbs_prediabetes": {
+    "en": "Your random blood sugar is a little higher than normal. Cut back on sugary drinks and white rice/bread, eat more vegetables and fish, and try to walk regularly. Talk to a nurse or doctor about this reading.",
+    "gil": "Your random blood sugar is a little higher than normal. Cut back on sugary drinks and white rice/bread, eat more vegetables and fish, and try to walk regularly. Talk to a nurse or doctor about this reading."
+  },
+  "rbs_diabetes": {
+    "en": "Your random blood sugar is in the diabetes range. Please see a doctor or nurse soon. In the meantime, avoid sugary drinks and snacks, favor vegetables, fish, and small portions of rice, and stay active.",
+    "gil": "Your random blood sugar is in the diabetes range. Please see a doctor or nurse soon. In the meantime, avoid sugary drinks and snacks, favor vegetables, fish, and small portions of rice, and stay active."
+  }
+}
