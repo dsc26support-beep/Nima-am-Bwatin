@@ -198,6 +198,26 @@ Paused
 
 ---
 
+## Photo picker (medications and appointments)
+
+**photo_label**
+Photo
+>
+
+**photo_add**
+Add photo
+>
+
+**photo_take**
+Take a photo
+>
+
+**photo_choose_gallery**
+Choose from gallery
+>
+
+---
+
 ## Days of the week
 
 **weekday_monday**

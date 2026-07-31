@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../core/theme.dart';
 import '../../l10n/app_localizations.dart';
 import '../../models/medication.dart';
 import '../../providers/medication_provider.dart';
 import '../../widgets/empty_state.dart';
+import '../../widgets/entity_thumbnail.dart';
 import 'medication_form_screen.dart';
 
 class MedicationListScreen extends ConsumerWidget {
@@ -37,7 +37,7 @@ class MedicationListScreen extends ConsumerWidget {
                   final medication = medications[index];
                   return Card(
                     child: ListTile(
-                      leading: const Icon(Icons.medication, color: AppColors.coral),
+                      leading: EntityThumbnail(photoPath: medication.photoPath, icon: Icons.medication),
                       title: Text(medication.name),
                       subtitle: Text('${medication.dosage} · ${_scheduleSummary(ref, medication)}'),
                       onTap: () => Navigator.of(context).push(

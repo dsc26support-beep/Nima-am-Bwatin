@@ -46,6 +46,11 @@
   "medication_active": "Active",
   "medication_paused": "Paused",
 
+  "photo_label": "Photo",
+  "photo_add": "Add photo",
+  "photo_take": "Take a photo",
+  "photo_choose_gallery": "Choose from gallery",
+
   "weekday_monday": "Monday",
   "weekday_tuesday": "Tuesday",
   "weekday_wednesday": "Wednesday",

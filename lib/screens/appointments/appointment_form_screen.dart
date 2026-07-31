@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../l10n/app_localizations.dart';
 import '../../models/appointment.dart';
 import '../../providers/appointment_provider.dart';
+import '../../widgets/photo_picker_field.dart';
 
 class AppointmentFormScreen extends ConsumerStatefulWidget {
   const AppointmentFormScreen({super.key, this.existing});
@@ -21,6 +22,7 @@ class _AppointmentFormScreenState extends ConsumerState<AppointmentFormScreen> {
   DateTime _date = DateTime.now().add(const Duration(days: 1));
   TimeOfDay _time = const TimeOfDay(hour: 9, minute: 0);
   int _leadMinutes = 60;
+  String? _photoPath;
 
   bool _saving = false;
 
@@ -34,6 +36,7 @@ class _AppointmentFormScreenState extends ConsumerState<AppointmentFormScreen> {
       _date = existing.dateTime;
       _time = TimeOfDay(hour: existing.dateTime.hour, minute: existing.dateTime.minute);
       _leadMinutes = existing.reminderLeadMinutes;
+      _photoPath = existing.photoPath;
     }
   }
 
@@ -67,9 +70,15 @@ class _AppointmentFormScreenState extends ConsumerState<AppointmentFormScreen> {
     setState(() => _saving = true);
 
     final dateTime = DateTime(_date.year, _date.month, _date.day, _time.hour, _time.minute);
-    final appointment = (widget.existing ??
-            Appointment(title: '', location: '', dateTime: dateTime, reminderLeadMinutes: _leadMinutes))
-        .copyWith(title: title, location: location, dateTime: dateTime, reminderLeadMinutes: _leadMinutes);
+    final appointment = Appointment(
+      id: widget.existing?.id,
+      title: title,
+      location: location,
+      dateTime: dateTime,
+      reminderLeadMinutes: _leadMinutes,
+      notificationId: widget.existing?.notificationId,
+      photoPath: _photoPath,
+    );
 
     if (widget.existing == null) {
       await ref.read(appointmentProvider.notifier).add(appointment);
@@ -104,6 +113,11 @@ class _AppointmentFormScreenState extends ConsumerState<AppointmentFormScreen> {
                 labelText: ref.t('appointment_location'),
                 hintText: ref.t('appointment_location_hint'),
               ),
+            ),
+            const SizedBox(height: 16),
+            PhotoPickerField(
+              photoPath: _photoPath,
+              onChanged: (path) => setState(() => _photoPath = path),
             ),
             const SizedBox(height: 16),
             ListTile(

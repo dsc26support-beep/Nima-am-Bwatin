@@ -6,6 +6,7 @@ class Appointment {
     required this.dateTime,
     required this.reminderLeadMinutes,
     this.notificationId,
+    this.photoPath,
   });
 
   final int? id;
@@ -18,6 +19,10 @@ class Appointment {
 
   final int? notificationId;
 
+  /// Path to a locally-saved photo (e.g. a referral letter or appointment
+  /// card), if the user attached one. Null if none was added.
+  final String? photoPath;
+
   Appointment copyWith({
     int? id,
     String? title,
@@ -25,6 +30,7 @@ class Appointment {
     DateTime? dateTime,
     int? reminderLeadMinutes,
     int? notificationId,
+    String? photoPath,
   }) {
     return Appointment(
       id: id ?? this.id,
@@ -33,6 +39,7 @@ class Appointment {
       dateTime: dateTime ?? this.dateTime,
       reminderLeadMinutes: reminderLeadMinutes ?? this.reminderLeadMinutes,
       notificationId: notificationId ?? this.notificationId,
+      photoPath: photoPath ?? this.photoPath,
     );
   }
 
@@ -46,6 +53,7 @@ class Appointment {
       'date_time': dateTime.toIso8601String(),
       'reminder_lead_minutes': reminderLeadMinutes,
       'notification_id': notificationId,
+      'photo_path': photoPath,
     };
   }
 
@@ -57,6 +65,7 @@ class Appointment {
       dateTime: DateTime.parse(map['date_time'] as String),
       reminderLeadMinutes: map['reminder_lead_minutes'] as int,
       notificationId: map['notification_id'] as int?,
+      photoPath: map['photo_path'] as String?,
     );
   }
 

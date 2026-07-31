@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../core/theme.dart';
 import '../../l10n/app_localizations.dart';
 import '../../providers/appointment_provider.dart';
 import '../../widgets/empty_state.dart';
+import '../../widgets/entity_thumbnail.dart';
 import 'appointment_form_screen.dart';
 
 class AppointmentListScreen extends ConsumerWidget {
@@ -35,7 +35,7 @@ class AppointmentListScreen extends ConsumerWidget {
                   final appointment = appointments[index];
                   return Card(
                     child: ListTile(
-                      leading: const Icon(Icons.event, color: AppColors.coral),
+                      leading: EntityThumbnail(photoPath: appointment.photoPath, icon: Icons.event),
                       title: Text(appointment.title),
                       subtitle: Text('${appointment.location}\n${_formatDateTime(appointment.dateTime)}'),
                       isThreeLine: true,

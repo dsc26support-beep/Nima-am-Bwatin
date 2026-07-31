@@ -16,7 +16,7 @@ class DatabaseService {
   final String dbName;
   Database? _db;
 
-  static const int _dbVersion = 3;
+  static const int _dbVersion = 4;
 
   Future<Database> get database async {
     _db ??= await _initDb();
@@ -41,7 +41,8 @@ class DatabaseService {
             weekdays TEXT NOT NULL,
             times TEXT NOT NULL,
             notification_ids TEXT NOT NULL,
-            is_active INTEGER NOT NULL DEFAULT 1
+            is_active INTEGER NOT NULL DEFAULT 1,
+            photo_path TEXT
           )
         ''');
         await db.execute('''
@@ -51,7 +52,8 @@ class DatabaseService {
             location TEXT NOT NULL,
             date_time TEXT NOT NULL,
             reminder_lead_minutes INTEGER NOT NULL,
-            notification_id INTEGER
+            notification_id INTEGER,
+            photo_path TEXT
           )
         ''');
         await db.execute('''
@@ -72,6 +74,10 @@ class DatabaseService {
         }
         if (oldVersion < 3) {
           await _createCaregiversTable(db);
+        }
+        if (oldVersion < 4) {
+          await db.execute('ALTER TABLE medications ADD COLUMN photo_path TEXT');
+          await db.execute('ALTER TABLE appointments ADD COLUMN photo_path TEXT');
         }
       },
     );
