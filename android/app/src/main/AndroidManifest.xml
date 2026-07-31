@@ -54,7 +54,7 @@
         <!-- flutter_local_notifications: handles notification action button
              taps (e.g. "Pills taken", "Alert caregiver"). Without this
              declared, Android has no component to receive the action's
-             broadcast intent, so tapping an action silently does nothing --
+             broadcast intent, so tapping an action silently does nothing:
              no cancel, no callback, no log entry. -->
         <receiver android:exported="false" android:name="com.dexterous.flutterlocalnotifications.ActionBroadcastReceiver"/>
     </application>
