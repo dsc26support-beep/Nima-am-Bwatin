@@ -108,6 +108,7 @@
   "settings_checking_updates": "Checking for updates...",
   "settings_update_now": "Update now",
   "settings_up_to_date": "You're on the latest version",
+  "settings_update_check_failed": "Couldn't check for updates -- tap to try again",
   "settings_feedback": "Send feedback",
 
   "manage_medications_title": "Manage medications",

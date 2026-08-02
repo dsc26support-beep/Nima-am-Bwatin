@@ -445,6 +445,10 @@ Update now
 You're on the latest version
 > Ea update am bwai aei
 
+**settings_update_check_failed** (new key -- machine draft, added while fixing a bug where a failed check could look like "up to date"; not yet reviewed by you)
+Couldn't check for updates -- tap to try again
+> E aki kona n tiroaki te update -- kotea bwa ko na manga kataia
+
 **settings_feedback**
 Send feedback
 > Kanakoa am iango

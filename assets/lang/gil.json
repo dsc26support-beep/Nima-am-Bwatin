@@ -108,6 +108,7 @@
   "settings_checking_updates": "E kakaaei update...",
   "settings_update_now": "Update Ngkai",
   "settings_up_to_date": "Ea update am bwai aei",
+  "settings_update_check_failed": "E aki kona n tiroaki te update -- kotea bwa ko na manga kataia",
   "settings_feedback": "Kanakoa am iango",
 
   "manage_medications_title": "Bwatin",
