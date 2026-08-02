@@ -7,6 +7,7 @@ import '../../models/medication_schedule.dart';
 import '../../providers/medication_provider.dart';
 import '../../repositories/medication_repository.dart';
 import '../../services/scheduling_service.dart';
+import '../../widgets/photo_picker_field.dart';
 
 class MedicationFormScreen extends ConsumerStatefulWidget {
   const MedicationFormScreen({super.key, this.existing});
@@ -26,6 +27,7 @@ class _MedicationFormScreenState extends ConsumerState<MedicationFormScreen> {
   int _everyXHours = 8;
   List<TimeOfDay> _times = [const TimeOfDay(hour: 8, minute: 0)];
   final Set<int> _weekdays = {1, 2, 3, 4, 5, 6, 7};
+  String? _photoPath;
 
   bool _saving = false;
 
@@ -43,6 +45,7 @@ class _MedicationFormScreenState extends ConsumerState<MedicationFormScreen> {
       _weekdays
         ..clear()
         ..addAll(existing.schedule.weekdays.isEmpty ? {1, 2, 3, 4, 5, 6, 7} : existing.schedule.weekdays);
+      _photoPath = existing.photoPath;
     }
   }
 
@@ -105,8 +108,15 @@ class _MedicationFormScreenState extends ConsumerState<MedicationFormScreen> {
     setState(() => _saving = true);
 
     final schedule = _buildSchedule();
-    final medication = (widget.existing ?? const Medication(name: '', dosage: '', schedule: MedicationSchedule(type: FrequencyType.timesPerDay, times: [])))
-        .copyWith(name: name, dosage: dosage, schedule: schedule);
+    final medication = Medication(
+      id: widget.existing?.id,
+      name: name,
+      dosage: dosage,
+      schedule: schedule,
+      notificationIds: widget.existing?.notificationIds ?? const [],
+      isActive: widget.existing?.isActive ?? true,
+      photoPath: _photoPath,
+    );
 
     try {
       if (widget.existing == null) {
@@ -174,6 +184,11 @@ class _MedicationFormScreenState extends ConsumerState<MedicationFormScreen> {
                 labelText: ref.t('medication_dosage'),
                 hintText: ref.t('medication_dosage_hint'),
               ),
+            ),
+            const SizedBox(height: 16),
+            PhotoPickerField(
+              photoPath: _photoPath,
+              onChanged: (path) => setState(() => _photoPath = path),
             ),
             const SizedBox(height: 24),
             Text(ref.t('medication_frequency'), style: Theme.of(context).textTheme.titleLarge),

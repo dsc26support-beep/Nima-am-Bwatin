@@ -19,6 +19,7 @@ void main() {
       ),
       notificationIds: [1300, 1301],
       isActive: true,
+      photoPath: '/data/user/0/app/files/photos/123_box.jpg',
     );
 
     final restored = Medication.fromJson(original.toJson());
@@ -30,6 +31,7 @@ void main() {
     expect(restored.schedule.times.map((t) => '${t.hour}:${t.minute}'), ['8:0', '20:30']);
     expect(restored.notificationIds, original.notificationIds);
     expect(restored.isActive, original.isActive);
+    expect(restored.photoPath, original.photoPath);
   });
 
   test('Appointment survives a toJson/fromJson roundtrip', () {
@@ -40,6 +42,7 @@ void main() {
       dateTime: DateTime.utc(2026, 8, 1, 9, 30),
       reminderLeadMinutes: 60,
       notificationId: 500002,
+      photoPath: '/data/user/0/app/files/photos/456_letter.jpg',
     );
 
     final restored = Appointment.fromJson(original.toJson());
@@ -49,6 +52,7 @@ void main() {
     expect(restored.dateTime, original.dateTime);
     expect(restored.reminderLeadMinutes, original.reminderLeadMinutes);
     expect(restored.notificationId, original.notificationId);
+    expect(restored.photoPath, original.photoPath);
   });
 
   test('BloodSugarReading survives a toJson/fromJson roundtrip', () {

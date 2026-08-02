@@ -46,6 +46,11 @@
   "medication_active": "Active",
   "medication_paused": "Paused",
 
+  "photo_label": "Photo",
+  "photo_add": "Add photo",
+  "photo_take": "Take a photo",
+  "photo_choose_gallery": "Choose from gallery",
+
   "weekday_monday": "Monday",
   "weekday_tuesday": "Tuesday",
   "weekday_wednesday": "Wednesday",
@@ -103,6 +108,7 @@
   "settings_checking_updates": "Checking for updates...",
   "settings_update_now": "Update now",
   "settings_up_to_date": "You're on the latest version",
+  "settings_update_check_failed": "Couldn't check for updates -- tap to try again",
   "settings_feedback": "Send feedback",
 
   "manage_medications_title": "Manage medications",

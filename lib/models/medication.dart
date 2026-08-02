@@ -10,6 +10,7 @@ class Medication {
     required this.schedule,
     this.notificationIds = const [],
     this.isActive = true,
+    this.photoPath,
   });
 
   final int? id;
@@ -19,6 +20,10 @@ class Medication {
   final List<int> notificationIds;
   final bool isActive;
 
+  /// Path to a locally-saved photo of the medication (e.g. the box or
+  /// label), if the user attached one. Null if none was added.
+  final String? photoPath;
+
   Medication copyWith({
     int? id,
     String? name,
@@ -26,6 +31,7 @@ class Medication {
     MedicationSchedule? schedule,
     List<int>? notificationIds,
     bool? isActive,
+    String? photoPath,
   }) {
     return Medication(
       id: id ?? this.id,
@@ -34,6 +40,7 @@ class Medication {
       schedule: schedule ?? this.schedule,
       notificationIds: notificationIds ?? this.notificationIds,
       isActive: isActive ?? this.isActive,
+      photoPath: photoPath ?? this.photoPath,
     );
   }
 
@@ -45,6 +52,7 @@ class Medication {
       ...schedule.toMap(),
       'notification_ids': jsonEncode(notificationIds),
       'is_active': isActive ? 1 : 0,
+      'photo_path': photoPath,
     };
   }
 
@@ -58,6 +66,7 @@ class Medication {
           .map((e) => e as int)
           .toList(),
       isActive: (map['is_active'] as int) == 1,
+      photoPath: map['photo_path'] as String?,
     );
   }
 

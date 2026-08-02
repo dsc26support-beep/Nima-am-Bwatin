@@ -5,7 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../l10n/app_localizations.dart';
 import '../services/update_check_service.dart';
 
-enum _UpdateState { idle, checking, upToDate, available }
+enum _UpdateState { idle, checking, upToDate, available, failed }
 
 class UpdateCheckTile extends ConsumerStatefulWidget {
   const UpdateCheckTile({super.key});
@@ -26,9 +26,15 @@ class _UpdateCheckTileState extends ConsumerState<UpdateCheckTile> {
     }
 
     setState(() => _state = _UpdateState.checking);
-    final available = await UpdateCheckService.isUpdateAvailable();
+    final result = await UpdateCheckService.checkForUpdate();
     if (!mounted) return;
-    setState(() => _state = available ? _UpdateState.available : _UpdateState.upToDate);
+    setState(() {
+      _state = switch (result) {
+        UpdateCheckResult.updateAvailable => _UpdateState.available,
+        UpdateCheckResult.upToDate => _UpdateState.upToDate,
+        UpdateCheckResult.checkFailed => _UpdateState.failed,
+      };
+    });
   }
 
   @override
@@ -43,6 +49,8 @@ class _UpdateCheckTileState extends ConsumerState<UpdateCheckTile> {
         label = ref.t('settings_update_now');
       case _UpdateState.upToDate:
         label = ref.t('settings_up_to_date');
+      case _UpdateState.failed:
+        label = ref.t('settings_update_check_failed');
     }
 
     return Card(

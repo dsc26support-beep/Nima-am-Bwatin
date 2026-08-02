@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../core/theme.dart';
 import '../../l10n/app_localizations.dart';
 import '../../models/medication.dart';
 import '../../providers/medication_provider.dart';
 import '../../widgets/confirm_dialog.dart';
 import '../../widgets/empty_state.dart';
+import '../../widgets/entity_thumbnail.dart';
 
 /// Where medications get deleted from -- kept out of the main Medications
 /// tab so a stray tap there can't accidentally remove a reminder.
@@ -41,7 +41,7 @@ class ManageMedicationsScreen extends ConsumerWidget {
                   final medication = medications[index];
                   return Card(
                     child: ListTile(
-                      leading: const Icon(Icons.medication, color: AppColors.coral),
+                      leading: EntityThumbnail(photoPath: medication.photoPath, icon: Icons.medication),
                       title: Text(medication.name),
                       subtitle: Text(medication.dosage),
                       trailing: IconButton(

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../core/theme.dart';
 import '../../l10n/app_localizations.dart';
 import '../../models/appointment.dart';
 import '../../providers/appointment_provider.dart';
 import '../../widgets/confirm_dialog.dart';
 import '../../widgets/empty_state.dart';
+import '../../widgets/entity_thumbnail.dart';
 
 /// Where appointments get deleted from -- kept out of the main Appointments
 /// tab so a stray tap there can't accidentally remove a reminder.
@@ -50,7 +50,7 @@ class ManageAppointmentsScreen extends ConsumerWidget {
                   final appointment = appointments[index];
                   return Card(
                     child: ListTile(
-                      leading: const Icon(Icons.event, color: AppColors.coral),
+                      leading: EntityThumbnail(photoPath: appointment.photoPath, icon: Icons.event),
                       title: Text(appointment.title),
                       subtitle: Text('${appointment.location}\n${_formatDateTime(appointment.dateTime)}'),
                       isThreeLine: true,
