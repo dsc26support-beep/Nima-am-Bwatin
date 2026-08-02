@@ -1,8 +1,9 @@
 # Kiribati Translation Sheet — Nima-am-Bwatin
 
-**Status: finalized.** These are the user's own edited translations
-(transcribed from their reviewed copy of this sheet), now live in
-`assets/lang/gil.json` and `assets/data/dietary_advice.json`.
+**Status: finalized (v2).** These are the user's own edited translations
+(transcribed from their latest reviewed copy of this sheet), now live in
+`assets/lang/gil.json`. The dietary-advice paragraphs in
+`assets/data/dietary_advice.json` were unchanged in this revision.
 
 ---
 
@@ -74,7 +75,7 @@ Be In Safe Of Your Health
 
 **onboarding_subtitle**
 Keep track of your medications, clinic appointments, and blood sugar readings, in English or Kiribati.
-> Katauaa am bwena, am tai ni bo ma te taokita ke te kiliniki, ao am rekoti ni suka n te raraa, n te Taetae ni Ingiriti ke n Taetae ni Kiribati.
+> Taui mwin am bwainaoraki, am appointment ma te taokita ke te kiriniki, ao tiokam, n English ke n Taetae ni Kiribati.
 
 **onboarding_get_started**
 Get Started
@@ -86,19 +87,19 @@ Get Started
 
 **nav_medications**
 Medications
-> Am Bwena
+> Bwainaoraki
 
 **nav_appointments**
 Appointments
-> Tai ni Bo
+> Appointments
 
 **nav_blood_sugar**
 Blood Sugar
-> Suka n te Raraa
+> Tiokam
 
 **nav_settings**
 Settings
-> Baaire
+> Settings
 
 ---
 
@@ -106,23 +107,23 @@ Settings
 
 **medications_title**
 Medications
-> Am Bwena
+> Bwainaoraki
 
 **medications_empty**
 You haven't added any medications yet.
-> Ko tuai n rin te bwena teuana.
+> Ko tuai ni karin am bwainaoraki.
 
 **medications_add**
 Add Medication
-> Karina te Bwena
+> Karina te Bwainaorakia
 
 **medications_edit**
 Edit Medication
-> Bitaki te Bwena
+> Bita am Bwainaoraki
 
 **medication_name**
 Medication name
-> Aran te bwena
+> Aran te Bwatin
 
 **medication_name_hint**
 e.g. Paracetamol
@@ -130,7 +131,7 @@ e.g. Paracetamol
 
 **medication_dosage**
 Dosage
-> Bwaan te bwena
+> Ae kona nimma
 
 **medication_dosage_hint**
 e.g. 500 mg, 1 tablet
@@ -142,11 +143,11 @@ How often
 
 **frequency_times_per_day**
 Times per day
-> Aoana nte bongina
+> Taina n tebongina
 
 **frequency_specific_times**
 Specific times
-> Tai aika Onoti
+> Karioi oin am tai
 
 **frequency_every_x_hours**
 Every X hours
@@ -154,7 +155,7 @@ Every X hours
 
 **frequency_specific_weekdays**
 Specific days of the week
-> Bong tabeua n te wiki
+> Tabeua bongin te wiki
 
 **medication_times_label**
 Reminder times
@@ -174,11 +175,11 @@ Medication limit reached
 
 **medication_cap_reached_body**
 You can track up to 20 medications at a time. Remove one before adding another.
-> Ko kona ni kawakina batin aika 20 n te tai teuana. Kanakoa teuana imwain ae ko manga karinna.
+> Ko kona ni kawakini batin aika 20 n te tai teuana. Kanakoa teuana imwain ae kona karina ae boou.
 
 **medication_delete_confirm**
 Delete this medication and cancel its reminders?
-> Ko kani kamaunaa te batin aei ao ni katoka ana kauring?
+> Ko kani kamaunaa te batin aei ao ni katoki ana kauring?
 
 **medication_save**
 Save medication
@@ -198,19 +199,19 @@ Paused
 
 **photo_label**
 Photo
-> Taamnei
+> Tamnei
 
 **photo_add**
 Add photo
-> Karina te taamnei
+> Karina te tamnei
 
 **photo_take**
 Take a photo
-> Rawe taamnei
+> Rawe tamnei
 
 **photo_choose_gallery**
 Choose from gallery
-> Rinea mai buakon am taamnei
+> Rineia mai buakon am taamnei
 
 ---
 
@@ -318,11 +319,11 @@ Save appointment
 
 **blood_sugar_title**
 Blood Sugar
-> Tiokan te rara
+> Tiokam
 
 **blood_sugar_empty**
 No blood sugar readings recorded yet.
-> Akea mwin tiokan raram n ara rekoti.
+> Akea mwin tiokam n ara rekoti.
 
 **blood_sugar_add**
 Add Reading
@@ -386,7 +387,7 @@ Dietary advice
 
 **advice_disclaimer**
 This is general guidance only and does not replace advice from a doctor or nurse.
-> Aikai bon ti taeka ni kairi aika a tabangaki ao aki anei mwin ana reirei te taokita ke te neeti.
+> Aikai bon ti taeka ni bau aika a tabangaki ao aki onei mwin aia reirei taokita ma neeti.
 
 ---
 
@@ -414,7 +415,7 @@ Export my data
 
 **settings_import_data**
 Import data from a backup
-> Kaoka rongorongou
+> Karini rongorongou mani nnena
 
 **settings_manage_medications**
 Manage medications
@@ -426,7 +427,7 @@ Manage appointments
 
 **settings_about**
 About this app
-> Taekan te App Aei
+> Te App Aei
 
 **settings_check_updates**
 Check for updates
@@ -438,7 +439,7 @@ Checking for updates...
 
 **settings_update_now**
 Update now
-> Karaoa te Update Ngkai
+> Update Ngkai
 
 **settings_up_to_date**
 You're on the latest version
@@ -494,7 +495,7 @@ Submit
 
 **feedback_empty_error**
 Please write something before submitting.
-> Taiaoka korea moa te bwai teuana imwain ae ko kanakoa.
+> Taiaoka korei moa am iango imwain ae ko kanakoa.
 
 **feedback_sent_title**
 Feedback sent
@@ -502,7 +503,7 @@ Feedback sent
 
 **feedback_sent_body**
 Your feedback email was sent. Thank you!
-> E a tia ni kanakoaki am iango n te i-meeri. Ko rabwa!
+> E a tia ni kanakoaki am iango ni katamaroa n te i-meeri. Ko rabwa!
 
 **feedback_failed_title**
 Could not send
@@ -510,7 +511,7 @@ Could not send
 
 **feedback_failed_body**
 We couldn't open your email app to send this feedback.
-> Ti aki kona ni kaukia am aab n i-meera ibukin kanakoan am iango.
+> Ti aki kona ni kaukia am i-meera ibukin kanakoan am katamaroa.
 
 **feedback_try_again**
 Try again
@@ -518,7 +519,7 @@ Try again
 
 **feedback_back_to_settings**
 Back to Settings
-> Oki nakon Settings
+> Okira Settings
 
 ---
 
@@ -526,7 +527,7 @@ Back to Settings
 
 **medication_notification_title**
 Time for your medication
-> E bo am tai ni bwatin
+> Ea bo am tai ni bwatin
 
 **medication_notification_body**
 Take {dosage} of {name} now.
@@ -534,11 +535,11 @@ Take {dosage} of {name} now.
 
 **pills_taken_action**
 Pills taken
-> Tia n nima au bwatin
+> Pills taken
 
 **appointment_notification_title**
 Upcoming appointment
-> Am Tai n appointment ae a kaan
+> Am appointment aikai
 
 **appointment_notification_body**
 {title} at {location}
@@ -550,15 +551,15 @@ Upcoming appointment
 
 **settings_medication_log**
 Pill-taking history
-> Taun mwiin ninimakin am bwatin
+> Mwiin ninimakin am bwatin
 
 **medication_log_title**
 Pill-taking history
-> Taun mwiin ninimakin am bwatin
+> Mwiin ninimakin am bwatin
 
 **medication_log_empty**
 Nothing logged yet -- this fills in each time you press "Pills taken" on a reminder.
-> Akea moa te bwai ae koreaki -- e na kaonaki teuana ma teuana ngkana ko rina "I a tia n anaa au bwatin" iaon te kauring.
+> Akea kanoana -- e na kaonaki ngkana ko kotea "Pills Taken" iaon te kauring.
 
 ---
 
@@ -566,11 +567,11 @@ Nothing logged yet -- this fills in each time you press "Pills taken" on a remin
 
 **alert_caregiver_action**
 Alert caregiver
-> Kanakoi kauring nakon te tia buokiko
+> Kauringa te tia buokiko
 
 **settings_manage_caregivers**
 Manage caregivers
-> Kawakina taan buobuoki
+> Taan buobuoki
 
 **settings_ask_reminder**
 Ask someone to remind me
@@ -578,11 +579,11 @@ Ask someone to remind me
 
 **manage_caregivers_title**
 Manage caregivers
-> Kawakina taan buobuoki
+> Taan buobuoki
 
 **manage_caregivers_empty**
 No caregivers added yet. Add someone who can help remind you to take your medication.
-> Akea temanna ae e a tia n karinaki bwa te tia buobuoki. Karina temanna ae kona ni buokiko ni kauringko ibukin tain am bwatim.
+> Akea temanna ae e a tia n karinaki bwa te tia buobuoki. Karina temanna ae kona ni buokiko ni kauringko tain am bwatim.
 
 **caregiver_add**
 Add caregiver
@@ -590,11 +591,11 @@ Add caregiver
 
 **caregiver_edit**
 Edit caregiver
-> Bita te tia ibuobuoki
+> Bita te tia buobuoki
 
 **caregiver_name**
 Name
-> Ara
+> Arana
 
 **caregiver_email**
 Email
@@ -626,27 +627,27 @@ No contact info added yet
 
 **caregiver_delete_confirm**
 Remove this caregiver?
-> Ko kani kanakoa te tia buobuoki aei?
+> Ko kani kanakoa te tia buokiko aei?
 
 **alert_caregiver_title**
 Ask someone to remind me
-> Butiia temanna bwa e na uringko
+> Butiia temanna bwa e na kauringai
 
 **alert_caregiver_intro**
 This opens the app of your choice with a reminder message ready to send -- you'll still need to tap send yourself once it opens.
-> Aei e na kaukia te aab are ko rineia ma te rongorongo n uring ae tauraoi ni kanakoaki -- ko na bon rinea naba te kanakoa ngkana e a tia ni kaukaki.
+> Aei e na kaukia te app are ko rineia ma te rongorongo n kauring ae tauraoi ni kanakoaki -- ko na kotea send ngkana e a uki.
 
 **alert_caregiver_no_caregivers**
 You haven't added any caregivers yet. Add one in Settings first.
-> Ko tuai n karina temanna bwa te tia buobuoki. Karina temanna i nanon Baaire moa.
+> Ko tuai n karina aran ae ena buobuoki. Nakon Settings ao ko karinna moa.
 
 **caregiver_message_generic**
 Hi, this is a reminder to help me take my medication. Sent via the Nima-am-Bwatin app.
-> Mauri, aei bon te kauring ni buokai n anaani au bwena. E kanakoaki man te aab ae Nima-am-Bwatin.
+> Mauri, aei bon te kauring ibukin buokau kauringau tain au bwainaoraki. E kanakoaki man te app ae Nima-am-Bwatin.
 
 **caregiver_message_with_medication**
 Hi, this is a reminder to help me take my {name}. Sent via the Nima-am-Bwatin app.
-> Mauri, aei bon te kauring {name}. E kanakoaki man te app Nima-am-Bwatin.
+> Mauri {name}, aei bon te kauring ibukin buokau kauringau tain au bwainaoraki. E kanakoaki man te app ae Nima-am-Bwatin.
 
 **caregiver_sent_email**
 Email app opened for {name} -- tap send there.
@@ -662,7 +663,7 @@ Message copied. Paste it once Messenger opens with {name}'s chat.
 
 **caregiver_failed_generic**
 Couldn't open that app. Check the contact info you saved for {name}.
-> E aki kona ni kaukaki te app arei. Tarai rongorongo n reitaki ake ko kawakini ibukin {name}.
+> E aki kona ni kaukaki te app arei. Tuoi mwin ana bwai n reitaki ake ko kawakini ibukin {name}.
 
 ---
 
@@ -690,7 +691,7 @@ This app needs permission to send you reminder notifications for medications and
 
 **export_title**
 Export data
-> Kanakoa rongorongo
+> Kawakini rongorongo
 
 **export_intro**
 Your medications, appointments, and blood sugar history are stored only on this phone. If you lose this phone, switch to a new one, or reinstall the app, this data cannot be recovered unless you've exported a backup like this.
@@ -698,7 +699,7 @@ Your medications, appointments, and blood sugar history are stored only on this 
 
 **export_recovery_note**
 To recover it later, keep the exported file somewhere safe (email, Drive, computer). Then on the new phone, open Settings > "Import data from a backup" and select that file.
-> Bwa e na manga kaokaki n taina imwina, kawakina te file ae e a tia ni kanakoaki n te tabo ae raoiroi (i-meera, Drive, kompiuta). Imwina, i aon te tereboon ae boou, kaukia Baaire > "Kaokia rongorongo mai te rikoti ni kaawakina" ao rinea te file arei.
+> Bwa e na manga kaokaki n taina imwina, kawakina te file ae e a tia ni kanakoaki n te tabo ae raoiroi (i-meera, Drive, kompiuta). Imwina, i aon te tereboon ae boou, kauka Settings > "Kaoki rongorongo man te rikoti are ko kaawakina" ao rinea te file arei.
 
 **export_success**
 Your data was exported successfully.
@@ -710,7 +711,7 @@ Something went wrong while exporting your data.
 
 **import_title**
 Import data
-> Kaokan rongorongo
+> Karini rongorongo
 
 **import_confirm_replace**
 Importing will replace all data currently in the app with the contents of this backup file. Continue?
